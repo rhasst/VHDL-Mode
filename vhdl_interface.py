@@ -250,6 +250,72 @@ class vhdlModePasteAsTestbenchCommand(sublime_plugin.WindowCommand):
         print('vhdl-mode: Created testbench from interface.')
 
 #----------------------------------------------------------------
+class vhdlModePasteAsConstantCommand(sublime_plugin.TextCommand):
+    """
+    Once we've copied an interface, we can paste the data back as
+    signals (ports only, not generics.)
+    """
+    def description(self):
+        return "Paste {} generics as Constants".format(_interface.name)
+
+    def is_visible(self):
+        return self.view.match_selector(0, "source.vhdl") and bool(_interface.name)
+
+    def run(self, edit):
+        global _interface
+        # Get the current point location.
+        region = self.view.sel()[0]
+        original_point = region.begin()
+
+        # Move to the beginning of the line the point is on.
+        next_point = util.move_to_bol(self, original_point)
+
+        lines = []
+        # Construct structure and insert
+        block_str = _interface.constants()
+        if block_str is not None:
+            num_chars = self.view.insert(edit, next_point, block_str)
+            print('vhdl-mode: Inserted interface generics as constant(s).')
+            util.set_cursor(self, next_point+num_chars)
+        else:
+            print('vhdl-mode: No valid generics in interface for constants(s).')
+            # Set the point to original location
+            util.set_cursor(self, original_point)
+
+#----------------------------------------------------------------
+class vhdlModePasteAsGenericCommand(sublime_plugin.TextCommand):
+    """
+    Once we've copied an interface, we can paste the data back as
+    signals (ports only, not generics.)
+    """
+    def description(self):
+        return "Paste {} generics as generics".format(_interface.name)
+
+    def is_visible(self):
+        return self.view.match_selector(0, "source.vhdl") and bool(_interface.name)
+
+    def run(self, edit):
+        global _interface
+        # Get the current point location.
+        region = self.view.sel()[0]
+        original_point = region.begin()
+
+        # Move to the beginning of the line the point is on.
+        next_point = util.move_to_bol(self, original_point)
+
+        lines = []
+        # Construct structure and insert
+        block_str = _interface.generics()
+        if block_str is not None:
+            num_chars = self.view.insert(edit, next_point, block_str)
+            print('vhdl-mode: Inserted interface generics as generics(s).')
+            util.set_cursor(self, next_point+num_chars)
+        else:
+            print('vhdl-mode: No valid generics in interface for generics(s).')
+            # Set the point to original location
+            util.set_cursor(self, original_point)
+
+#----------------------------------------------------------------
 class vhdlModeFlattenPortsCommand(sublime_plugin.TextCommand):
     """
     This command scans over the internal data structure

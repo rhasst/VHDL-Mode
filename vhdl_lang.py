@@ -768,6 +768,27 @@ class Generic():
         line = '{} => {}'.format(self.name, self.name)
         return line
 
+    def print_as_generic(self):
+        '''Returns a string with the generic interface as a generic.'''
+        # So... generic doesn't necessarily have to have a default value
+        # even though it should.  So this requires a little detective work
+        # to know whether to include the whole line or add in the necessary
+        # constant definition.
+        #
+        # Technically using VHDL-2008 generic type isn't a constant, but for
+        # the moment, I'm going to include it here and just adjust the
+        # testbench template.
+        if self.gentype:
+            line = 'type {}'.format(self.name)
+        else:
+            s = re.search(r':=', self.type, re.I)
+            if s:
+                line = '{} : {}'.format(self.name, self.type)
+            else:
+                line = '{} : {} := <value>'.format(self.name, self.type)
+        return line
+
+
     def print_as_constant(self):
         '''Returns a string with the generic interface as a constant.'''
         # So... generic doesn't necessarily have to have a default value
@@ -995,6 +1016,23 @@ class Interface():
         if self.if_generics:
             for generic in self.if_generics:
                 lines.append(generic.print_as_constant() + ';')
+            cb = CodeBlock(lines)
+            cb.align_symbol(r':', 'pre', None)
+            cb.align_symbol(r':=', 'pre', None)
+            cb.indent_vhdl(1)
+            return cb.to_block()
+        else:
+            return None
+
+    def generics(self):
+        '''
+        This method returns the generic portion of the interface
+        listed as generics.
+        '''
+        lines = []
+        if self.if_generics:
+            for generic in self.if_generics:
+                lines.append(generic.print_as_generic() + ';')
             cb = CodeBlock(lines)
             cb.align_symbol(r':', 'pre', None)
             cb.align_symbol(r':=', 'pre', None)

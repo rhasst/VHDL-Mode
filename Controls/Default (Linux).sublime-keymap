@@ -27,6 +27,8 @@
 	{"keys": ["ctrl+c", "ctrl+s", "ctrl+b"], "command": "vhdl_mode_paste_as_body",        "context": [{"key": "selector", "operand": "source.vhdl"}, {"key": "setting.vhdl-emacs-keybinds", "operand": true}] },
 	{"keys": ["ctrl+c", "ctrl+s", "ctrl+c"], "command": "vhdl_mode_paste_as_call",        "context": [{"key": "selector", "operand": "source.vhdl"}, {"key": "setting.vhdl-emacs-keybinds", "operand": true}] },
 	{"keys": ["ctrl+c", "ctrl+s", "ctrl+f"], "command": "vhdl_mode_flatten_params",       "context": [{"key": "selector", "operand": "source.vhdl"}, {"key": "setting.vhdl-emacs-keybinds", "operand": true}] },
+	{"keys": ["ctrl+c", "ctrl+g", "ctrl+c"], "command": "vhdl_mode_paste_as_constant",    "context": [{"key": "selector", "operand": "source.vhdl"}, {"key": "setting.vhdl-emacs-keybinds", "operand": true}] },
+	{"keys": ["ctrl+c", "ctrl+g", "ctrl+g"], "command": "vhdl_mode_paste_as_generic",    "context": [{"key": "selector", "operand": "source.vhdl"}, {"key": "setting.vhdl-emacs-keybinds", "operand": true}] },
 
 	//////////////////////////////////////////////////////////////////////////
 	// Normal Windows Keybinds -- Setup to avoid C-c
@@ -42,6 +44,8 @@
 	{"keys": ["alt+k", "p", "t"], "command": "vhdl_mode_paste_as_testbench", "context": [{"key": "selector", "operand": "source.vhdl"}] },
 	{"keys": ["alt+k", "p", "f"], "command": "vhdl_mode_flatten_ports",      "context": [{"key": "selector", "operand": "source.vhdl"}] },
 	{"keys": ["alt+k", "p", "r"], "command": "vhdl_mode_reverse_ports",      "context": [{"key": "selector", "operand": "source.vhdl"}] },
+	{"keys": ["alt+k", "g", "c"], "command": "vhdl_mode_paste_as_constant",  "context": [{"key": "selector", "operand": "source.vhdl"}] },
+	{"keys": ["alt+k", "g", "g"], "command": "vhdl_mode_paste_as_generic",   "context": [{"key": "selector", "operand": "source.vhdl"}] },
 	// 's' starts subprogram commands for copy and pasting.
 	{"keys": ["alt+k", "s", "w"], "command": "vhdl_mode_copy_subprogram",      "context": [{"key": "selector", "operand": "source.vhdl"}] },
 	{"keys": ["alt+k", "s", "d"], "command": "vhdl_mode_paste_as_declaration", "context": [{"key": "selector", "operand": "source.vhdl"}] },
